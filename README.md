@@ -37,27 +37,6 @@ Then, install the chart using:
 helm install rq-worker stackblaze/rq-worker -n stackblaze-prod -f values-secret.yaml
 
 ```
-
-## Configuration
-
-The following table lists the configurable parameters of the rq-worker chart and their default values.
-
-| Parameter           | Description                  | Default                  |
-
-|---------------------|------------------------------|--------------------------|
-
-| `replicaCount`      | Number of RQ worker replicas | `1`                      |
-
-| `image.repository`  | RQ worker image repository   | `stackblaze/rq-worker`   |
-
-| `image.tag`         | RQ worker image tag          | `latest`                 |
-
-| `image.pullPolicy`  | Image pull policy            | `IfNotPresent`           |
-
-| `redis.host`        | Redis host                   | `redis-service`          |
-
-| `redis.port`        | Redis port                   | `6379`                   |
-
 ### Values Example with Referencing a Secret
 
 ```yaml

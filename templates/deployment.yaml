@@ -19,9 +19,9 @@ spec:
       containers:
       - env:
         - name: REDIS_HOST
-          value: {{ .Values.rqWorker.worker.env.redisHost }}
+          value: {{ .Values.rqWorker.worker.env.redisHost | quote }}
         - name: REDIS_PORT
-          value: {{ .Values.rqWorker.worker.env.redisPort }}
+          value: {{ .Values.rqWorker.worker.env.redisPort | quote }}
         - name: KUBERNETES_CLUSTER_DOMAIN
           value: {{ .Values.kubernetesClusterDomain }}
         image: {{ .Values.rqWorker.worker.image.repository }}:{{ .Values.rqWorker.worker.image.tag | default .Chart.AppVersion }}

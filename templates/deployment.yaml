@@ -36,3 +36,25 @@ spec:
         - name: KUBERNETES_CLUSTER_DOMAIN
           value: {{ .Values.kubernetesClusterDomain }}
         resources: {}
+        readinessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - "rq info --url redis://$REDIS_HOST:$REDIS_PORT"
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+        livenessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - "rq info --url redis://$REDIS_HOST:$REDIS_PORT"
+          initialDelaySeconds: 15
+          periodSeconds: 20
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3

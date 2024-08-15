@@ -24,20 +24,9 @@ spec:
           value: {{ .Values.rqWorker.worker.env.redisHost | quote }}
         - name: REDIS_PORT
           value: {{ .Values.rqWorker.worker.env.redisPort | quote }}
-        {{- if .Values.rqWorker.worker.env.redisUsername }}
         - name: REDIS_USERNAME
           value: {{ .Values.rqWorker.worker.env.redisUsername | quote }}
-        {{- else if .Values.rqWorker.worker.env.redisUsernameSecret }}
-        - name: REDIS_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Values.rqWorker.worker.env.redisUsernameSecret.name }}
-              key: {{ .Values.rqWorker.worker.env.redisUsernameSecret.key }}
-        {{- end }}
-        {{- if .Values.rqWorker.worker.env.redisPassword }}
-        - name: REDIS_PASSWORD
-          value: {{ .Values.rqWorker.worker.env.redisPassword | quote }}
-        {{- else if .Values.rqWorker.worker.env.redisPasswordSecret }}
+        {{- if .Values.rqWorker.worker.env.redisPasswordSecret }}
         - name: REDIS_PASSWORD
           valueFrom:
             secretKeyRef:

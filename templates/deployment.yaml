@@ -27,10 +27,22 @@ spec:
         {{- if .Values.rqWorker.worker.env.redisUsername }}
         - name: REDIS_USERNAME
           value: {{ .Values.rqWorker.worker.env.redisUsername | quote }}
+        {{- else if .Values.rqWorker.worker.env.redisUsernameSecret }}
+        - name: REDIS_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.rqWorker.worker.env.redisUsernameSecret.name }}
+              key: {{ .Values.rqWorker.worker.env.redisUsernameSecret.key }}
         {{- end }}
         {{- if .Values.rqWorker.worker.env.redisPassword }}
         - name: REDIS_PASSWORD
           value: {{ .Values.rqWorker.worker.env.redisPassword | quote }}
+        {{- else if .Values.rqWorker.worker.env.redisPasswordSecret }}
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.rqWorker.worker.env.redisPasswordSecret.name }}
+              key: {{ .Values.rqWorker.worker.env.redisPasswordSecret.key }}
         {{- end }}
         - name: KUBERNETES_CLUSTER_DOMAIN
           value: {{ .Values.kubernetesClusterDomain }}

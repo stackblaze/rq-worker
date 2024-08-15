@@ -17,13 +17,24 @@ spec:
         {{- include "rq-worker.selectorLabels" . | nindent 8 }}
     spec:
       containers:
-      - env:
+      - name: worker
+        image: {{ .Values.rqWorker.worker.image.repository }}:{{ .Values.rqWorker.worker.image.tag | default .Chart.AppVersion }}
+        env:
         - name: REDIS_HOST
           value: {{ .Values.rqWorker.worker.env.redisHost | quote }}
         - name: REDIS_PORT
           value: {{ .Values.rqWorker.worker.env.redisPort | quote }}
         - name: KUBERNETES_CLUSTER_DOMAIN
           value: {{ .Values.kubernetesClusterDomain }}
-        image: {{ .Values.rqWorker.worker.image.repository }}:{{ .Values.rqWorker.worker.image.tag | default .Chart.AppVersion }}
-        name: worker
+        {{- if .Values.redis.username }}
+        - name: REDIS_USERNAME
+          value: {{ .Values.redis.username | quote }}
+        {{- end }}
+        {{- if .Values.redis.password }}
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-redis
+              key: redis-password
+        {{- end }}
         resources: {}

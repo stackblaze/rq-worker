@@ -3,27 +3,27 @@ kind: Deployment
 metadata:
   name: {{ include "rq-worker.fullname" . }}-rq-worker
   labels:
-  {{- include "rq-worker.labels" . | nindent 4 }}
+    {{- include "rq-worker.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.rqWorker.replicas }}
   selector:
     matchLabels:
       app: rq-worker
-    {{- include "rq-worker.selectorLabels" . | nindent 6 }}
+      {{- include "rq-worker.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
         app: rq-worker
-      {{- include "rq-worker.selectorLabels" . | nindent 8 }}
+        {{- include "rq-worker.selectorLabels" . | nindent 8 }}
     spec:
       containers:
       - env:
         - name: REDIS_HOST
-          value: {{ quote .Values.rqWorker.worker.env.redisHost }}
+          value: {{ .Values.rqWorker.worker.env.redisHost }}
         - name: REDIS_PORT
-          value: {{ quote .Values.rqWorker.worker.env.redisPort }}
+          value: {{ .Values.rqWorker.worker.env.redisPort }}
         - name: KUBERNETES_CLUSTER_DOMAIN
-          value: {{ quote .Values.kubernetesClusterDomain }}
+          value: {{ .Values.kubernetesClusterDomain }}
         image: {{ .Values.rqWorker.worker.image.repository }}:{{ .Values.rqWorker.worker.image.tag | default .Chart.AppVersion }}
         name: worker
         resources: {}

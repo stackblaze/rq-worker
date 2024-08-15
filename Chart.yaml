@@ -1,0 +1,12 @@
+apiVersion: v2
+name: rq-worker
+description: |
+  A Helm chart for deploying RQ (Redis Queue) workers on Kubernetes.
+  This chart sets up and manages RQ worker instances to process background jobs
+  in a distributed environment, utilizing Redis as the message broker.
+  It provides configurable options for scaling, resource allocation, and
+  monitoring of RQ workers to efficiently handle asynchronous task processing.
+
+type: application
+version: 0.1.0
+appVersion: "0.1.0"

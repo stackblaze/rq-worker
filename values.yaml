@@ -1,10 +1,14 @@
 kubernetesClusterDomain: cluster.local
+
 rqWorker:
   replicas: 1
   worker:
-    env:
-      redisHost: redis-service
-      redisPort: "6379"
     image:
       repository: stackblaze/rq-worker
       tag: latest
+      pullPolicy: Always
+    env:
+      redisHost: "redis-master"
+      redisPort: "6379"
+      redisUsername: ""
+      redisPassword: ""
